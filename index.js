@@ -4,7 +4,7 @@
 
 import {AppRegistry} from 'react-native';
 import App from './App';
-import SplashScreem from './src/Splash'
 import {name as appName} from './app.json';
+import Route from './Navigation/route'
 
-AppRegistry.registerComponent(appName, () => SplashScreem);
+AppRegistry.registerComponent(appName, () => Route);

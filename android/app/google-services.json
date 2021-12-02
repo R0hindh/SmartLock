@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "956610815555",
+    "project_id": "smartlock-project",
+    "storage_bucket": "smartlock-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956610815555:android:92ff7aa56e1446564496f6",
+        "android_client_info": {
+          "package_name": "com.smartlock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956610815555-2428d6biasncbsi5nrceabbcnqfthsgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOPuXn919kGNCuVIc7uSmkkfla_GtfJXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956610815555-2428d6biasncbsi5nrceabbcnqfthsgl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "956610815555-f8e7oo2931qr216kva3ptcj415bbacsq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.smartlock"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

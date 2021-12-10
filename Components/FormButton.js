@@ -4,9 +4,14 @@ import {windowHeight, windowWidth} from '../utils/Dimentions';
 
 const FormButton = ({buttonTitle, ...props}) => {
   return (
-    <TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
-      <Text style={styles.buttonText}>{buttonTitle}</Text>
-    </TouchableOpacity>
+    !props.outLineStyle?
+      <TouchableOpacity style={{...styles.buttonContainer, ...props.customStyle}} onPress={props.onPress}>
+        <Text style={styles.buttonText}>{buttonTitle}</Text>
+      </TouchableOpacity>
+    :<TouchableOpacity style={{...styles.buttonContainerOutLine, ...props.customStyle}} onPress={props.onPress}>
+        <Text style={styles.buttonTextOutLine}>{buttonTitle}</Text>
+      </TouchableOpacity>
+
   );
 };
 
@@ -25,7 +30,25 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: '#fff',
     fontFamily: 'Lato-Regular',
   },
+  buttonContainerOutLine:{
+    marginTop: 10,
+    width: '100%',
+    height: windowHeight / 15,
+    backgroundColor: '#fff',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 3,
+    borderWidth:1,
+    borderColor:'#3386EB'
+  },
+  buttonTextOutLine:{
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#3386EB',
+    fontFamily: 'Lato-Regular',
+  }
 });

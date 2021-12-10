@@ -9,6 +9,9 @@ import SignUpScreen from '../Screens/SignUpScreen'
 import SplashScreen from '../Screens/Splash';
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
+import AppContext from '../Components/AppContext'
+import Authentication from '../Screens/Authentication'
+import database from '@react-native-firebase/database';
 
 const stack = createNativeStackNavigator();
 
@@ -17,11 +20,23 @@ export default Route = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [AdminPinDB, setAdminPinDB] = useState(null)
   function onAuthStateChanged(user) {
     setUser(user);
     if (initializing) setInitializing(false);
   }
+  useEffect(() => {
+    if(user){
+      database()
+        .ref(`/Users/${user.uid}/adminPin`)
+        .once('value')
+        .then(snapshot => {
+          console.log('Admin PIN: ', snapshot.val());
+          setAdminPinDB(snapshot.val())
+        });
+    }
+  }, [user])
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; 
@@ -59,6 +74,20 @@ export default Route = () => {
       </stack.Navigator>
     )
   }
+
+  const AuthenticationNavigator=(props)=>{
+    return(
+      <stack.Navigator
+        initialRouteName="Authentication"
+        screenOptions={{
+          headerShown:false
+        }}
+      >
+        <stack.Screen name="Authentication" component={Authentication} />
+      </stack.Navigator>
+    )
+  }
+
   const MainNavigator = (props)=>{
     if (!firebase.apps.length) {
       let credentials = {
@@ -74,12 +103,20 @@ export default Route = () => {
     }
     return(
       <NavigationContainer>
-        {user? <AppNavigator/>:<AuthNavigator/>}
+        {user?
+          isAuthenticated?<AppNavigator/>:<AuthenticationNavigator/>
+          :<AuthNavigator/>}
       </NavigationContainer>
     )
   }
-
+  const GlobeStateSetting ={
+    isAuthenticated: isAuthenticated,
+    AdminPinDB:AdminPinDB,
+    setIsAuthenticated:setIsAuthenticated
+  }
   return(
-    <MainNavigator/>
+    <AppContext.Provider value={GlobeStateSetting}>
+      <MainNavigator/>
+    </AppContext.Provider>
   )
 };

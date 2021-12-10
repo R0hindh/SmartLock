@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Keyboard,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView
 } from 'react-native';
 import FormButton from '../Components/FormButton';
 import FormInput from '../Components/FormInput';
@@ -15,15 +16,14 @@ import SocialButton from '../Components/SocialButton';
 import {AppColor} from '../Constants/constants';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
-// import * as firebase from 'firebase'
 import firebase from '@react-native-firebase/app';
 
 export default SignUpScreen = props => {
-  const [email, setEmail] = useState('rohindh@gmail.com');
-  const [password, setPassword] = useState('Test1234$');
-  const [adminPin, setAdminPin] = useState('1234567');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [adminPin, setAdminPin] = useState('');
   const [errorText, setErrorText] = useState(null);
-  const [username, setUsername] = useState('Rohindh');
+  const [username, setUsername] = useState('');
 
   const onClickSignUp = () => {
     if (
@@ -65,7 +65,11 @@ export default SignUpScreen = props => {
           .ref()
           .child('Users/')
           .child(user.uid)
-          .set({username, adminPin});
+          .set({
+            username,
+            adminPin,
+            lockStatus:false,
+            deviceStatus:false});
         props.navigation.navigate('Login');
         console.log('User account created & signed in!');
       })
@@ -84,7 +88,8 @@ export default SignUpScreen = props => {
 
   //   const {login, googleLogin, fbLogin} = useContext(AuthContext);
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
       <Text style={styles.text}>Create an account</Text>
       <FormInput
         labelValue={email}
@@ -148,7 +153,7 @@ export default SignUpScreen = props => {
         onPress={() => props.navigation.navigate('Login')}>
         <Text style={styles.navButtonText}>Have an account? Sign In</Text>
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

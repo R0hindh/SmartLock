@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, TouchableOpacity, Platform, Image, StyleSheet, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, Platform, Image, StyleSheet, Alert, KeyboardAvoidingView} from 'react-native';
 import FormButton from '../Components/FormButton';
 import FormInput from '../Components/FormInput';
 import SocialButton from '../Components/SocialButton';
@@ -7,8 +7,8 @@ import auth from '@react-native-firebase/auth';
 import {AppColor} from '../Constants/constants'
 
 export default LoginScreen = ({navigation}) => {
-  const [email, setEmail] = useState('rohindh@gmail.com');
-  const [password, setPassword] = useState('Test1234$');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errorText, setErrorText] = useState(null);
   const onClickSignIn = ()=>{
     if (
@@ -29,7 +29,8 @@ export default LoginScreen = ({navigation}) => {
     auth().signInWithEmailAndPassword(email, password)
   }
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
       <Image source={require('../Asset/no_slogan.png')} style={styles.logo} />
       <FormInput
         labelValue={email}
@@ -69,7 +70,7 @@ export default LoginScreen = ({navigation}) => {
         </Text>
       </TouchableOpacity>
 
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
